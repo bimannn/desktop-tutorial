@@ -11,14 +11,14 @@ pygame.display.set_caption("Paint TSIS 2")
 canvas = pygame.Surface((WIDTH, HEIGHT))
 canvas.fill((255, 255, 255))
 
-# Цвета
+
 color = (0, 0, 0)
 
-# Инструменты
+
 tool = "pencil"
 
-# Толщина кисти
-brush_sizes = [2, 5, 10]
+
+brush_sizes = [10]
 brush_index = 0
 brush_size = brush_sizes[brush_index]
 
@@ -26,7 +26,7 @@ drawing = False
 last_pos = None
 start_pos = None
 
-# Текст
+
 font = pygame.font.SysFont(None, 30)
 text_input = ""
 text_pos = None
@@ -68,10 +68,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # КЛАВИАТУРА
+        
         if event.type == pygame.KEYDOWN:
 
-            # Смена инструмента
+            
             if event.key == pygame.K_p:
                 tool = "pencil"
             if event.key == pygame.K_l:
@@ -81,7 +81,7 @@ while running:
             if event.key == pygame.K_t:
                 tool = "text"
 
-            # Размер кисти
+            
             if event.key == pygame.K_1:
                 brush_index = 0
             if event.key == pygame.K_2:
@@ -90,13 +90,13 @@ while running:
                 brush_index = 2
             brush_size = brush_sizes[brush_index]
 
-            # Сохранение
+            
             if event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
                 filename = datetime.now().strftime("image_%Y%m%d_%H%M%S.png")
                 pygame.image.save(canvas, filename)
                 print("Saved:", filename)
 
-            # ВВОД ТЕКСТА
+            
             if typing:
                 if event.key == pygame.K_RETURN:
                     text_surface = font.render(text_input, True, color)
@@ -114,7 +114,7 @@ while running:
                 else:
                     text_input += event.unicode
 
-        # МЫШКА
+        
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
 
@@ -148,12 +148,12 @@ while running:
                 pygame.draw.line(canvas, color, last_pos, event.pos, brush_size)
                 last_pos = event.pos
 
-    # ПРЕВЬЮ ЛИНИИ
+    
     if drawing and tool == "line":
         mouse_pos = pygame.mouse.get_pos()
         pygame.draw.line(screen, color, start_pos, mouse_pos, brush_size)
 
-    # ПРЕВЬЮ ТЕКСТА
+    
     if typing:
         text_surface = font.render(text_input, True, color)
         screen.blit(text_surface, text_pos)
