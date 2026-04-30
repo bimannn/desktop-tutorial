@@ -10,8 +10,7 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 
-1
-# ADD CONTACT
+
 
 def add_contact():
     name = input("Name: ")
@@ -32,12 +31,10 @@ def add_contact():
     cur.execute("CALL add_phone(%s, %s, %s)", (name, phone, phone_type))
     conn.commit()
 
-    print("✅ Contact added!")
+    print("Contact added!")
 
 
-# -----------------------
-# FILTER BY GROUP
-# -----------------------
+
 def filter_by_group():
     group = input("Group name: ")
 
@@ -51,9 +48,7 @@ def filter_by_group():
     print(cur.fetchall())
 
 
-# -----------------------
-# SEARCH BY EMAIL
-# -----------------------
+
 def search_email():
     email = input("Email search: ")
 
@@ -66,9 +61,7 @@ def search_email():
     print(cur.fetchall())
 
 
-# -----------------------
-# SORT
-# -----------------------
+
 def sort_contacts():
     option = input("Sort by (name/birthday/date): ")
 
@@ -82,9 +75,6 @@ def sort_contacts():
     print(cur.fetchall())
 
 
-# -----------------------
-# PAGINATION
-# -----------------------
 def pagination():
     limit = 5
     offset = 0
@@ -103,9 +93,7 @@ def pagination():
             break
 
 
-# -----------------------
-# EXPORT JSON
-# -----------------------
+
 def export_json():
     cur.execute("SELECT name, email, birthday FROM contacts")
     data = cur.fetchall()
@@ -121,12 +109,9 @@ def export_json():
     with open("contacts.json", "w") as f:
         json.dump(result, f, indent=4)
 
-    print("✅ Exported!")
+    print("Exported!")
 
 
-# -----------------------
-# IMPORT JSON
-# -----------------------
 def import_json():
     with open("contacts.json", "r") as f:
         data = json.load(f)
@@ -149,12 +134,9 @@ def import_json():
         """, (c["name"], c["email"], c["birthday"]))
 
     conn.commit()
-    print("✅ Imported!")
+    print(" Imported!")
 
 
-# -----------------------
-# MENU
-# -----------------------
 def menu():
     while True:
         print("""
