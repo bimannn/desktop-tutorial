@@ -5,17 +5,17 @@ from racer import Player, Enemy, PowerUp, LANES
 from persistence import load_data, save_data, update_leaderboard
 from ui import draw_text, create_button
 
-# Инициализация
+
 pygame.init()
 WIDTH, HEIGHT = 500, 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Advanced Racer")
 CLOCK = pygame.time.Clock()
 
-# Цвета
+
 ROAD_COLOR = (50, 50, 50)
 
-# Загрузка настроек
+
 settings = load_data("settings.json", {"sound": True, "color": (255, 255, 0), "difficulty": 1})
 
 def main_game(username):
@@ -40,29 +40,29 @@ def main_game(username):
                 pygame.quit()
                 sys.exit()
 
-        # Сложность: увеличиваем скорость со временем
+        
         current_speed = speed + (distance // 1000)
         
-        # Спавн врагов
+        
         if len(enemies) < 2:
             new_enemy = Enemy(current_speed)
             enemies.add(new_enemy)
             all_sprites.add(new_enemy)
 
-        # Спавн бонусов
+        
         if random.randint(1, 250) == 1:
             p = PowerUp(random.choice(['nitro', 'shield']))
             powerups.add(p)
             all_sprites.add(p)
 
-        # Обновление
+        
         player.move()
         enemies.update()
         powerups.update(current_speed)
         distance += current_speed / 10
         score += 0.1
 
-        # Коллизии с врагами
+        
         if pygame.sprite.spritecollide(player, enemies, True):
             if player.has_shield:
                 player.has_shield = False
@@ -71,7 +71,7 @@ def main_game(username):
                 update_leaderboard(username, score, distance)
                 return "GAME_OVER"
 
-        # Сбор бонусов
+        
         hits = pygame.sprite.spritecollide(player, powerups, True)
         for hit in hits:
             if hit.type == 'nitro':
@@ -82,12 +82,12 @@ def main_game(username):
                 player.has_shield = True
                 active_powerup = "Shield"
 
-        # Окончание нитро
+        
         if active_powerup == "Nitro" and pygame.time.get_ticks() > nitro_end_time:
             speed -= 5
             active_powerup = None
 
-        # Отрисовка
+        
         all_sprites.draw(SCREEN)
         draw_text(SCREEN, f"Score: {int(score)}", 25, 70, 30)
         draw_text(SCREEN, f"{int(distance)}m", 20, 70, 60)
@@ -109,7 +109,7 @@ def main_menu():
         
         if create_button(SCREEN, "START GAME", 150, 300, 200, 50, (0, 150, 0), (0, 200, 0)):
             res = main_game(username)
-            # После игры возвращаемся в меню
+            
 
         if create_button(SCREEN, "QUIT", 150, 400, 200, 50, (150, 0, 0), (200, 0, 0)):
             pygame.quit()

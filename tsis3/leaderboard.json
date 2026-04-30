@@ -5,8 +5,18 @@
         "distance": 2569
     },
     {
+        "name": "Player\r ",
+        "score": 246,
+        "distance": 1573
+    },
+    {
         "name": "Player",
         "score": 114,
         "distance": 789
+    },
+    {
+        "name": "Player",
+        "score": 8,
+        "distance": 50
     }
 ]
